@@ -12,4 +12,11 @@
     <Preference
         android:key="@string/logout_pref_key"
         android:title="@string/profile_logout" />
+
+    <Preference
+        android:key="version"
+        android:title="Version">
+        <intent android:action="com.netspace.crm.android.ui.VersionActivity"/>
+    </Preference>
+
 </PreferenceScreen>
