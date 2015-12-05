@@ -14,6 +14,10 @@ public class UnitTest {
         assertTrue(LoginActivity.isValid("662DD0C8-9AAE-45AF-BCA5-88CF0BBFB754"));
     }
 
+    @Test
+    public void testEmailValidation() {
+        assertTrue(LoginActivity.isValidEmailAddress("testEmail@gmail.com"));
+    }
 
 
 }
