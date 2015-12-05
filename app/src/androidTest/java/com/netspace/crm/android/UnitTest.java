@@ -19,5 +19,9 @@ public class UnitTest {
         assertTrue(LoginActivity.isValidEmailAddress("testEmail@gmail.com"));
     }
 
+    @Test
+    public void testDateUtils() {
+        assertTrue(!DateUtils.formatTimerTime(2584818).equals("5 dec 2015"));
+    }
 
 }
