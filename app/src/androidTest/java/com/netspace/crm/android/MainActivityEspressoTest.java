@@ -91,6 +91,53 @@ public class MainActivityEspressoTest extends ActivityInstrumentationTestCase2<M
         onData(allOf(is(instanceOf(DrawerItems.class)), is(item))).inAdapterView(withId(R.id.drawer_list)).perform(click());
     }
 
+    public void testUpdateTask() {
+        login();
+        Log.i(tag, "testUpdateTask has started");
+
+        openDrawerItem(TASKS);
+        onData(allOf(is(instanceOf(Task.class)))).inAdapterView(withId(R.id.list)).atPosition(0).perform(click());
+
+        onView(withId(R.id.detail_activity_task_title)).perform(typeText("+"));
+
+        onView(withId(R.id.detail_activity_task_description)).perform(typeText("-"));
+
+        onView(withId(R.id.detail_activity_start_layout)).perform(click());
+        onView(withClassName(equalTo(TimePicker.class.getName()))).perform(setTime(10, 15));
+        onView(allOf(withClassName(equalTo(WrappingViewPager.class.getName())),
+                withId(R.id.view_pager))).perform(swipeLeft());
+        onView(withClassName(equalTo(DatePicker.class.getName()))).perform(setDate(2015, 7, 30));
+        onView(withId(R.id.dialog_ok_btn)).perform(click());
+
+        onView(withId(R.id.detail_activity_end_layout)).perform(click());
+        onView(withClassName(equalTo(TimePicker.class.getName()))).perform(setTime(12, 0));
+        onView(allOf(withClassName(equalTo(WrappingViewPager.class.getName())),
+                withId(R.id.view_pager))).perform(swipeLeft());
+        onView(withClassName(equalTo(DatePicker.class.getName()))).perform(setDate(2015, 7, 29));
+        onView(withId(R.id.dialog_ok_btn)).perform(click());
+
+        onView(withId(R.id.detail_activity_task_save_changes)).perform(click());
+        pressBack();
+        onView(withText(R.string.changes_not_saved_message)).inRoot(isDialog()).check(matches(isDisplayed()));
+        onView(withText(R.string.cancel)).perform(click());
+
+        onView(withId(R.id.detail_activity_end_layout)).perform(click());
+        onView(allOf(withClassName(equalTo(WrappingViewPager.class.getName())),
+                withId(R.id.view_pager))).perform(swipeLeft());
+        onView(withClassName(equalTo(DatePicker.class.getName()))).perform(setDate(2015, 7, 30));
+        onView(withId(R.id.dialog_ok_btn)).perform(click());
+
+        onView(withId(R.id.detail_activity_task_save_changes)).perform(click());
+
+        onData(allOf(is(instanceOf(Task.class)))).inAdapterView(withId(R.id.list)).
+                atPosition(0).perform(click());
+        onView(withId(R.id.detail_activity_task_description)).perform(pressKey(KEYCODE_FORWARD_DEL));
+        onView(withId(R.id.detail_activity_task_save_changes)).perform(click());
+
+        logout();
+    }
+
+
 
     public void login() {
         onView(withId(R.id.loginEditText)).perform(clearText());
@@ -98,6 +145,7 @@ public class MainActivityEspressoTest extends ActivityInstrumentationTestCase2<M
         onView(withId(R.id.loginButton)).perform(click());
         onView(withId(R.id.start_stop_textView)).check(matches(isDisplayed()));
     }
+
 
 }
 
