@@ -1,0 +1,27 @@
+
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.5.0'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
+        classpath 'io.fabric.tools:gradle:1.19.2'
+    }
+}
+
+allprojects {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+        mavenCentral()
+    }
+
+    ext {
+        targetSDKVersion = 22
+        minSDKVersion = 15
+        buildToolVersion = '22.0.1'
+        supportLibraryVersion = '22.2.0'
+        playServicesVersion = '7.3.0'
+    }
+}
