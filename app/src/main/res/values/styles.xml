@@ -1,0 +1,23 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryColorDarker</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryColorDarker</item>
+    </style>
+    
+    <style name="Save_Button" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:layout_width">130dp</item>
+        <item name="android:layout_height">65dp</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:background">@drawable/save_button</item>
+    </style>
+
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+        android:defaultValue="@string/default_page_of_tasks_count"
+        android:entries="@array/itemsPerPage"
+        android:entryValues="@array/itemsPerPageValues"
+        android:key="@string/prefs_key_load_per_page"
+        android:summary="%s"
+        android:title="@string/pref_title_load_per_page" />
+
+    <Preference
+        android:key="@string/logout_pref_key"
+        android:title="@string/profile_logout" />
+</PreferenceScreen>

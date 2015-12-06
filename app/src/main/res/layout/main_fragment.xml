@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/start_time_textView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="@color/primary_dark_material_light"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <Chronometer
+        android:id="@+id/main_fragment_chronometer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
+        android:layout_weight="1"
+        android:format="@string/worked_time"
+        android:gravity="center"
+        android:textColor="@color/primary_dark_material_light"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <ImageButton
+        android:id="@+id/main_fragment_imageButton"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="13"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/start_tracking"
+        android:padding="40dp"
+        android:scaleType="fitCenter" />
+
+    <TextView
+        android:id="@+id/start_stop_textView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="20dp"
+        android:layout_weight="3"
+        android:gravity="center"
+        android:textColor="@color/primary_dark_material_light"
+        android:textSize="50sp"
+        android:textStyle="bold" />
+
+</LinearLayout>

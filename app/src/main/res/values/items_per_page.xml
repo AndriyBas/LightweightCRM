@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="itemsPerPage">
+        <item name="10">10 per page</item>
+        <item name="25">25 per page</item>
+        <item name="50">50 per page</item>
+        <item name="75">75 per page</item>
+        <item name="100">100 per page</item>
+    </string-array>
+
+    <string-array name="itemsPerPageValues">
+        <item name="10">10</item>
+        <item name="25">25</item>
+        <item name="50">50</item>
+        <item name="75">75</item>
+        <item name="100">100</item>
+    </string-array>
+
+</resources>
