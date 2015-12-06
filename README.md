@@ -14,3 +14,7 @@ After you build the project, the output APK for the app module is located in app
 Instructions for installing apk file on device or emulator
 Aditional information about build with command line
 For building in Android Studio import project into IDE and click "run"(green triangle) then choose device, where you want run app. Aditional information about build in Android Studio
+
+
+for running test perform:
+    assembleAndroidTest
