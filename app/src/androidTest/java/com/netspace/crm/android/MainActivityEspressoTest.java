@@ -137,7 +137,33 @@ public class MainActivityEspressoTest extends ActivityInstrumentationTestCase2<M
         logout();
     }
 
+    public void testMainFragment() {
+        login();
+        Log.i(tag, "testMainFragment has started");
 
+        onView(withId(R.id.start_stop_textView)).check(matches(withText(R.string.start_tracking)));
+        onView(withId(R.id.main_fragment_imageButton)).perform(click());
+        onView(withId(R.id.start_stop_textView)).check(matches(withText(R.string.stop_tracking)));
+        onView(withId(R.id.start_time_textView)).check(matches(isDisplayed()));
+        onView(withId(R.id.main_fragment_chronometer)).check(matches(isDisplayed()));
+        onView(withId(R.id.main_fragment_imageButton)).perform(click());
+        onView(withId(R.id.detail_activity_task_title)).perform(typeText("Task Title"));
+        onView(withId(R.id.detail_activity_task_description)).perform(typeText("Task Description"));
+        onView(withId(R.id.detail_activity_task_save_changes)).perform(click());
+        onData(instanceOf(Task.class)).inAdapterView(withId(R.id.list)).atPosition(0)
+                .check(matches(hasDescendant(withText("Task Title"))));
+        logout();
+    }
+
+    public void testSettings() {
+        login();
+        Log.i(tag, "testSettings has started");
+        openDrawerItem(SETTINGS);
+        onView(withText(R.string.pref_title_load_per_page)).perform(click());
+        onView(withText("50 per page")).perform(click());
+        openDrawerItem(TASKS);
+        logout();
+    }
 
     public void login() {
         onView(withId(R.id.loginEditText)).perform(clearText());
@@ -146,6 +172,11 @@ public class MainActivityEspressoTest extends ActivityInstrumentationTestCase2<M
         onView(withId(R.id.start_stop_textView)).check(matches(isDisplayed()));
     }
 
-
+    public void logout(){
+        openDrawerItem(SETTINGS);
+        onView(withText(R.string.profile_logout)).perform(click());
+        onView(withText(R.string.profile_logout)).perform(click());
+        onView(withId(R.id.loginButton)).check(matches(isDisplayed()));
+    }
 }
 
