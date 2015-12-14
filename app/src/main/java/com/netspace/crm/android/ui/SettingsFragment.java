@@ -8,6 +8,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 
+import com.netspace.crm.android.BuildConfig;
 import com.netspace.crm.android.CRMApp;
 import com.netspace.crm.android.R;
 import com.netspace.crm.android.config.AppPreferences;
@@ -73,5 +74,8 @@ public class SettingsFragment extends PreferenceFragment {
                 return true;
             }
         });
+
+        Preference versionPref = findPreference("app_version");
+        versionPref.setSummary(BuildConfig.VERSION_NAME);
     }
 }

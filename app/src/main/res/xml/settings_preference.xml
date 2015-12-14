@@ -14,9 +14,7 @@
         android:title="@string/profile_logout" />
 
     <Preference
-        android:key="version"
-        android:title="Version">
-        <intent android:action="com.netspace.crm.android.ui.VersionActivity"/>
-    </Preference>
+        android:key="app_version"
+        android:title="Version" />
 
 </PreferenceScreen>
