@@ -18,10 +18,10 @@ allprojects {
     }
 
     ext {
-        targetSDKVersion = 22
-        minSDKVersion = 15
-        buildToolVersion = '22.0.1'
-        supportLibraryVersion = '22.2.0'
+        targetSDKVersion = 23
+        minSDKVersion = 16
+        buildToolVersion = '23.0.2'
+        supportLibraryVersion = '23.1.1'
         playServicesVersion = '7.3.0'
     }
 }
