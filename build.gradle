@@ -24,4 +24,10 @@ allprojects {
         supportLibraryVersion = '23.1.1'
         playServicesVersion = '7.3.0'
     }
+
+    // http://stackoverflow.com/questions/28999124/resolved-versions-for-app-22-0-0-and-test-app-21-0-3-differ
+    configurations.all {
+        resolutionStrategy.force ('com.android.support:support-annotations:' + supportLibraryVersion)
+    }
 }
+
