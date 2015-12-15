@@ -12,14 +12,14 @@ apply from: '../config/quality.gradle'
 /*
 + * Gets the version name from the latest Git tag
 + */
-def getVersionName = { ->
-    def stdout = new ByteArrayOutputStream()
-    exec {
-        commandLine 'git', 'describe', '--tags'
-        standardOutput = stdout
-    }
-    return stdout.toString().trim()
-}
+//def getVersionName = { ->
+//    def stdout = new ByteArrayOutputStream()
+//    exec {
+//        commandLine 'git', 'describe', '--tags'
+//        standardOutput = stdout
+//    }
+//    return stdout.toString().trim()
+//}
 
 
 android {
@@ -31,7 +31,7 @@ android {
         minSdkVersion minSDKVersion
         targetSdkVersion targetSDKVersion
         versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch + versionBuild
-        versionName getVersionName()
+        versionName "v3.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     compileOptions {
