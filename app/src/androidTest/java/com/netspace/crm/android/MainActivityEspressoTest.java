@@ -120,9 +120,10 @@ public class MainActivityEspressoTest extends ActivityInstrumentationTestCase2<M
         onView(withId(R.id.detail_activity_task_title)).perform(typeText("+"));
         myWait(1000);
         onView(withId(R.id.detail_activity_task_description)).perform(typeText("-"));
-        myWait(1000);
+        Espresso.closeSoftKeyboard();
+        myWait(2000);
         onView(withId(R.id.detail_activity_start_layout)).perform(click());
-        myWait(1000);
+        myWait(2000);
         onView(withClassName(equalTo(TimePicker.class.getName()))).perform(setTime(10, 15));
         myWait(1000);
         onView(allOf(withClassName(equalTo(WrappingViewPager.class.getName())),
@@ -191,9 +192,10 @@ public class MainActivityEspressoTest extends ActivityInstrumentationTestCase2<M
         onView(withId(R.id.detail_activity_task_title)).perform(typeText("Task Title"));
         myWait(1000);
         onView(withId(R.id.detail_activity_task_description)).perform(typeText("Task Description"));
+        Espresso.closeSoftKeyboard();
         myWait(1000);
-//        onView(withId(R.id.detail_activity_task_save_changes)).perform(click());
-//        myWait(1000);
+        onView(withId(R.id.detail_activity_task_save_changes)).perform(click());
+        myWait(1000);
 //        onData(instanceOf(Task.class)).inAdapterView(withId(R.id.list)).atPosition(0)
 //                .check(matches(hasDescendant(withText("Task Title"))));
 //        myWait(1000);
