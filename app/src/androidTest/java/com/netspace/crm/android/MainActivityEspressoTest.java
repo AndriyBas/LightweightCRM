@@ -48,6 +48,8 @@ import static org.hamcrest.Matchers.startsWith;
 /**
  * created by axel95usa on 09.07.15.
  */
+
+// TODO: see http://stackoverflow.com/questions/30155227/espresso-how-to-wait-for-some-time1-hour
 public class MainActivityEspressoTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
     public final String tag = getClass().getSimpleName();
@@ -120,6 +122,7 @@ public class MainActivityEspressoTest extends ActivityInstrumentationTestCase2<M
         onView(withId(R.id.detail_activity_task_title)).perform(typeText("+"));
         myWait(1000);
         onView(withId(R.id.detail_activity_task_description)).perform(typeText("-"));
+        myWait(500);
         Espresso.closeSoftKeyboard();
         myWait(2000);
         onView(withId(R.id.detail_activity_start_layout)).perform(click());
@@ -192,6 +195,7 @@ public class MainActivityEspressoTest extends ActivityInstrumentationTestCase2<M
         onView(withId(R.id.detail_activity_task_title)).perform(typeText("Task Title"));
         myWait(1000);
         onView(withId(R.id.detail_activity_task_description)).perform(typeText("Task Description"));
+        myWait(500);
         Espresso.closeSoftKeyboard();
         myWait(1000);
         onView(withId(R.id.detail_activity_task_save_changes)).perform(click());
@@ -217,6 +221,7 @@ public class MainActivityEspressoTest extends ActivityInstrumentationTestCase2<M
         onView(withId(R.id.loginEditText)).perform(clearText());
         myWait(1000);
         onView(withId(R.id.loginEditText)).perform(typeText("662DD0C8-9AAE-45AF-BCA5-88CF0BBFB754"));
+        myWait(500);
         Espresso.closeSoftKeyboard();
         myWait(2000);
         onView(withId(R.id.loginButton)).perform(click());
