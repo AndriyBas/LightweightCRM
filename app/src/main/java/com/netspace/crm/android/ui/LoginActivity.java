@@ -80,7 +80,7 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-    public boolean isValid(String id) {
+    public static boolean isValid(String id) {
         return Pattern.matches(Utils.UUID_PATTERN, id);
     }
 
