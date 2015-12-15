@@ -16,7 +16,6 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.pressKey;
 import static android.support.test.espresso.action.ViewActions.swipeLeft;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -32,7 +31,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static android.view.KeyEvent.KEYCODE_FORWARD_DEL;
 import static com.netspace.crm.android.ui.MainActivity.DrawerItems;
 import static com.netspace.crm.android.ui.MainActivity.DrawerItems.PROFILE;
 import static com.netspace.crm.android.ui.MainActivity.DrawerItems.SETTINGS;
@@ -129,10 +127,10 @@ public class MainActivityEspressoTest extends ActivityInstrumentationTestCase2<M
 
         onView(withId(R.id.detail_activity_task_save_changes)).perform(click());
 
-        onData(allOf(is(instanceOf(Task.class)))).inAdapterView(withId(R.id.list)).
-                atPosition(0).perform(click());
-        onView(withId(R.id.detail_activity_task_description)).perform(pressKey(KEYCODE_FORWARD_DEL));
-        onView(withId(R.id.detail_activity_task_save_changes)).perform(click());
+//        onData(allOf(is(instanceOf(Task.class)))).inAdapterView(withId(R.id.list)).
+//                atPosition(0).perform(click());
+//        onView(withId(R.id.detail_activity_task_description)).perform(pressKey(KEYCODE_FORWARD_DEL));
+//        onView(withId(R.id.detail_activity_task_save_changes)).perform(click());
 
         logout();
     }
