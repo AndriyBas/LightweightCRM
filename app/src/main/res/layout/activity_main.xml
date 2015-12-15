@@ -27,7 +27,7 @@
             android:layout_height="220dp"
             android:layout_gravity="center"
             android:contentDescription="@string/image_content_description"
-            android:src="@drawable/logo_netspace" />
+            android:src="@drawable/crm_logo" />
 
         <ListView
             android:id="@+id/drawer_list"

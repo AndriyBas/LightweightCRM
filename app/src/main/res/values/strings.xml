@@ -19,7 +19,7 @@
     <string name="action_settings">Settings</string>
     <string name="login_button">Log in</string>
     <string name="login_edit_text_hint">Your UUID</string>
-    <string name="title">Netspace</string>
+    <string name="title">LightweightCRM</string>
     <string name="wrong_uuid">Your UUID is not valid</string>
     <string name="detail_activity_save_changes_button">Save changes</string>
     <string name="profile_title"><u>Profile:</u></string>

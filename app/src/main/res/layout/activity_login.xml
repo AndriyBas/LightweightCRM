@@ -33,7 +33,7 @@
                 android:layout_height="@dimen/login_activity_image_size"
                 android:layout_gravity="top|center"
                 android:contentDescription="@string/title"
-                android:src="@drawable/logo_netspace"/>
+                android:src="@drawable/crm_logo"/>
 
             <TextView
                 android:id="@+id/title_text_view"
