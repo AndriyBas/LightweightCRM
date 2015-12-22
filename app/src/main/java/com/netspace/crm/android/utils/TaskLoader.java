@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.netspace.crm.android.api.ApiService;
+import com.netspace.crm.android.api.RetryWithDelay;
 import com.netspace.crm.android.config.AppDatabase;
 import com.netspace.crm.android.config.AppPreferences;
 import com.netspace.crm.android.events.PageLoadedEvent;
@@ -50,6 +51,7 @@ public class TaskLoader {
         //download items page if needed
         if (offset <= prefs.getTotalResult() && offset + count > database.getCount()) {
             apiService.loadTasks(count, offset)
+                    .retryWhen(new RetryWithDelay(3, 2000))
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subscriber<ResponseModel>() {
                         @Override

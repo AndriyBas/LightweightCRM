@@ -3,6 +3,7 @@ package com.netspace.crm.android.utils;
 import android.util.Log;
 
 import com.netspace.crm.android.api.ApiService;
+import com.netspace.crm.android.api.RetryWithDelay;
 import com.netspace.crm.android.callbacks.TaskUploadCallback;
 import com.netspace.crm.android.config.AppDatabase;
 import com.netspace.crm.android.config.AppPreferences;
@@ -41,6 +42,7 @@ public class SyncManager {
         //Synchronize api and database, load new task
         if (syncTime != 0) {
             apiService.syncTask(DateUtils.formatDateUTC(new Date(syncTime)))
+                    .retryWhen(new RetryWithDelay(3, 2000))
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subscriber<SyncModel>() {
                         @Override
@@ -75,10 +77,12 @@ public class SyncManager {
             for (Task unSyncedTask : unSynced) {
                 if (unSyncedTask.getNewTask()) {
                     apiService.postTask(unSyncedTask)
+                            .retryWhen(new RetryWithDelay(3, 2000))
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new TaskUploadCallback(unSyncedTask, database));
                 } else {
                     apiService.updateTask(unSyncedTask)
+                            .retryWhen(new RetryWithDelay(3, 2000))
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new TaskUploadCallback(unSyncedTask, database));
                 }
@@ -93,6 +97,7 @@ public class SyncManager {
     public void postTask(final Task postTask) {
         insertTask(postTask);
         apiService.postTask(postTask)
+                .retryWhen(new RetryWithDelay(3, 2000))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new TaskUploadCallback(postTask, database));
     }
@@ -100,6 +105,7 @@ public class SyncManager {
     public void putTask(Task postTask) {
         insertTask(postTask);
         apiService.updateTask(postTask)
+                .retryWhen(new RetryWithDelay(3, 2000))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new TaskUploadCallback(postTask, database));
     }

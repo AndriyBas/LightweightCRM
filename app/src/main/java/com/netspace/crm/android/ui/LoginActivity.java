@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 import com.netspace.crm.android.CRMApp;
 import com.netspace.crm.android.R;
 import com.netspace.crm.android.api.ApiService;
+import com.netspace.crm.android.api.RetryWithDelay;
 import com.netspace.crm.android.model.Contact;
 import com.netspace.crm.android.utils.NetworkUtils;
 import com.netspace.crm.android.utils.Utils;
@@ -51,7 +52,9 @@ public class LoginActivity extends BaseActivity {
                 loginButton.setEnabled(false);
                 final String authorization = "Basic " + id;
                 loginProgressBar.setVisibility(View.VISIBLE);
-                apiService.logIn(authorization).observeOn(AndroidSchedulers.mainThread())
+                apiService.logIn(authorization)
+                        .retryWhen(new RetryWithDelay(3, 2000))
+                        .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Subscriber<Contact>() {
                             @Override
                             public void onCompleted() {
