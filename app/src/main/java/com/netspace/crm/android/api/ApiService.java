@@ -5,13 +5,13 @@ import com.netspace.crm.android.model.Contact;
 import com.netspace.crm.android.model.ResponseModel;
 import com.netspace.crm.android.model.SyncModel;
 
-import retrofit.Callback;
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.Header;
 import retrofit.http.POST;
 import retrofit.http.PUT;
 import retrofit.http.Query;
+import rx.Observable;
 import taskDB.Task;
 
 /**
@@ -20,20 +20,18 @@ import taskDB.Task;
 public interface ApiService {
 
     @GET("/v1/Contacts")
-    void logIn(@Header("Authorization") String id, Callback<Contact> callback);
+    Observable<Contact> logIn(@Header("Authorization") String id);
 
     @GET("/v1/activities")
-    void loadTasks(@Query("count") int count,
-                   @Query("offset") int offset,
-                   Callback<ResponseModel> callback);
+    Observable<ResponseModel> loadTasks(@Query("count") int count,
+                   @Query("offset") int offset);
 
     @GET("/v1/activity/modified")
-    void syncTask(@Query("lastSyncTime") String lastSyncTime,
-                  Callback<SyncModel> callback);
+    Observable<SyncModel> syncTask(@Query("lastSyncTime") String lastSyncTime);
 
     @PUT("/v1/activity")
-    void updateTask(@Body Task t, Callback<Task> callback);
+    Observable<Task> updateTask(@Body Task t);
 
     @POST("/v1/activity")
-    void postTask(@Body Task t, Callback<Task> callback);
+    Observable<Task> postTask(@Body Task t);
 }

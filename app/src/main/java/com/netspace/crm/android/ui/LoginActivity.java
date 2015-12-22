@@ -22,9 +22,8 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * created by Oleh Kolomiets
@@ -52,26 +51,32 @@ public class LoginActivity extends BaseActivity {
                 loginButton.setEnabled(false);
                 final String authorization = "Basic " + id;
                 loginProgressBar.setVisibility(View.VISIBLE);
-                apiService.logIn(authorization, new Callback<Contact>() {
-                    @Override
-                    public void success(Contact contact, Response response) {
-                        prefs.saveUserId(id);
-                        prefs.saveUserProfile(contact);
-                        loginButton.setEnabled(true);
-                        loginProgressBar.setVisibility(View.GONE);
-                        Log.d(tag, " Response received, name and idTextView saved");
-                        startMainActivity();
-                    }
+                apiService.logIn(authorization).observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Subscriber<Contact>() {
+                            @Override
+                            public void onCompleted() {
 
-                    @Override
-                    public void failure(RetrofitError error) {
-                        Log.d(tag, "login failed", error);
-                        if (LoginActivity.this != null) {
-                            loginProgressBar.setVisibility(View.GONE);
-                            showToast(R.string.wrong_uuid);
-                        }
-                    }
-                });
+                            }
+
+                            @Override
+                            public void onError(Throwable error) {
+                                Log.d(tag, "login failed", error);
+                                if (LoginActivity.this != null) {
+                                    loginProgressBar.setVisibility(View.GONE);
+                                    showToast(R.string.wrong_uuid);
+                                }
+                            }
+
+                            @Override
+                            public void onNext(Contact contact) {
+                                prefs.saveUserId(id);
+                                prefs.saveUserProfile(contact);
+                                loginButton.setEnabled(true);
+                                loginProgressBar.setVisibility(View.GONE);
+                                Log.d(tag, " Response received, name and idTextView saved");
+                                startMainActivity();
+                            }
+                        });
             } else {
                 showToast(R.string.user_offline_message);
             }

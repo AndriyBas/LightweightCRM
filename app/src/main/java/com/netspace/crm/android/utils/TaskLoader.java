@@ -12,9 +12,8 @@ import com.netspace.crm.android.model.ResponseModel;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
 import taskDB.Task;
 
 
@@ -50,22 +49,29 @@ public class TaskLoader {
     public void loadDataPage(final int offset, final int count) {
         //download items page if needed
         if (offset <= prefs.getTotalResult() && offset + count > database.getCount()) {
-            apiService.loadTasks(count, offset, new Callback<ResponseModel>() {
-                @Override
-                public void success(ResponseModel responseModel, Response response) {
-                    Log.i(tag, "successfully loaded from API");
-                    List<Task> tasks = responseModel.getTasks();
-                    new PutTasks(offset, count).execute(tasks.toArray(new Task[tasks.size()]));
-                    prefs.setLastSync(System.currentTimeMillis());
-                    prefs.setTotalResult(responseModel.getTotalResult());
-                }
+            apiService.loadTasks(count, offset)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subscriber<ResponseModel>() {
+                        @Override
+                        public void onCompleted() {
 
-                @Override
-                public void failure(RetrofitError error) {
-                    Log.e(tag, error.toString());
-                    EventBus.getDefault().post(new PageLoadedEvent(offset, count, false));
-                }
-            });
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            Log.e(tag, e.toString());
+                            EventBus.getDefault().post(new PageLoadedEvent(offset, count, false));
+                        }
+
+                        @Override
+                        public void onNext(ResponseModel responseModel) {
+                            Log.i(tag, "successfully loaded from API");
+                            List<Task> tasks = responseModel.getTasks();
+                            new PutTasks(offset, count).execute(tasks.toArray(new Task[tasks.size()]));
+                            prefs.setLastSync(System.currentTimeMillis());
+                            prefs.setTotalResult(responseModel.getTotalResult());
+                        }
+                    });
         } else {
             EventBus.getDefault().post(new PageLoadedEvent(offset, count, true));
         }

@@ -13,9 +13,8 @@ import java.util.Date;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
 import taskDB.Task;
 
 /**
@@ -41,10 +40,22 @@ public class SyncManager {
         uploadUnSyncedTasks(database.getAllUnSynced());
         //Synchronize api and database, load new task
         if (syncTime != 0) {
-            apiService.syncTask(DateUtils.formatDateUTC(new Date(syncTime)),
-                    new Callback<SyncModel>() {
+            apiService.syncTask(DateUtils.formatDateUTC(new Date(syncTime)))
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subscriber<SyncModel>() {
                         @Override
-                        public void success(SyncModel syncModel, Response response) {
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            Log.e(tag, "", e);
+                            EventBus.getDefault().post(new TaskSyncedEvent(false));
+                        }
+
+                        @Override
+                        public void onNext(SyncModel syncModel) {
                             Log.i(tag, "sync completed");
                             prefs.setTotalResult(syncModel.getTotalCount());
                             if (syncModel.getModifiedCount() != 0) {
@@ -55,12 +66,6 @@ public class SyncManager {
                             }
                             prefs.setLastSync(System.currentTimeMillis());
                         }
-
-                        @Override
-                        public void failure(RetrofitError error) {
-                            Log.e(tag, "", error);
-                            EventBus.getDefault().post(new TaskSyncedEvent(false));
-                        }
                     });
         }
     }
@@ -69,9 +74,13 @@ public class SyncManager {
         if (!unSynced.isEmpty()) {
             for (Task unSyncedTask : unSynced) {
                 if (unSyncedTask.getNewTask()) {
-                    apiService.postTask(unSyncedTask, new TaskUploadCallback(unSyncedTask, database));
+                    apiService.postTask(unSyncedTask)
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new TaskUploadCallback(unSyncedTask, database));
                 } else {
-                    apiService.updateTask(unSyncedTask, new TaskUploadCallback(unSyncedTask, database));
+                    apiService.updateTask(unSyncedTask)
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new TaskUploadCallback(unSyncedTask, database));
                 }
             }
         }
@@ -83,11 +92,15 @@ public class SyncManager {
 
     public void postTask(final Task postTask) {
         insertTask(postTask);
-        apiService.postTask(postTask, new TaskUploadCallback(postTask, database));
+        apiService.postTask(postTask)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new TaskUploadCallback(postTask, database));
     }
 
     public void putTask(Task postTask) {
         insertTask(postTask);
-        apiService.updateTask(postTask, new TaskUploadCallback(postTask, database));
+        apiService.updateTask(postTask)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new TaskUploadCallback(postTask, database));
     }
 }
