@@ -68,6 +68,7 @@ public class LoginActivity extends BaseActivity {
                                     loginProgressBar.setVisibility(View.GONE);
                                     showToast(R.string.wrong_uuid);
                                 }
+                                loginButton.setEnabled(true);
                             }
 
                             @Override
